@@ -14,17 +14,17 @@ public class UserFetcher {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
         BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        String inputLine;
+        String input;
         StringBuilder response = new StringBuilder();
-        while ((inputLine = in.readLine()) != null) {
-            response.append(inputLine);
+        while ((input = in.readLine()) != null) {
+            response.append(input);
         }
         in.close();
         JSONObject jsonResponse = new JSONObject(response.toString());
         return jsonResponse.getJSONArray("results");
     }
 
-    public static void printUsersByTimezone(JSONArray users, String timezone) {
+    public static void showUsersByTimezone(JSONArray users, String timezone) {
         ArrayList<String> usersInTimezone = new ArrayList<>();
         for (int i = 0; i < users.length(); i++) {
             JSONObject user = users.getJSONObject(i);
@@ -51,7 +51,7 @@ public class UserFetcher {
                 timezone = args[1];
             }
             JSONArray users = getUsers();
-            printUsersByTimezone(users, timezone);
+            showUsersByTimezone(users, timezone);
         } catch (Exception e) {
             e.printStackTrace();
         }
